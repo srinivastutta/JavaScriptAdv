@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Blocking UI</h1>
+    <p>Country</p>
+    <select name="country" id="country">
+        <option value="">-Select-</option>
+        <option value="India">India</option>
+        <option value="USA">United States</option>
+    </select>
+    <p>State</p>
+    <select name="states" id="states">
+        <option value="">-Select-</option>
+    </select>
+    <span id="ajax_error_placeholder"></span>
+    <span id="ajax_loading_placeholder"></span>
+    <p>Gender</p>
+    <select name="gender" id="gender">
+        <option value="">-Select-</option>
+        <option value="M">Male</option>
+        <option value="F">Female</option>
+        <option value="T">Transgender</option>
+    </select>
+    <p>Mobile</p>
+    <input type="text" id="mobile" />
+
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#country").change(function () {
+                const sel_country = $("#country").val();
+                const url =
+                    "http://123.201.239.243:9988/iHelix/loadStates.json?countryCode=" +
+                    sel_country; // endpoint is not working
+
+                $.ajax({
+                    url: url,
+                    beforeSend: function () {
+                        // It will call before ajax calling
+                        $("#states").find("option").not(":first").remove(); // This will remove all the options loaded before except the first one option
+                        $("#ajax_error_placeholder").html(''); // This will remove if there is any previously error loaded
+                        $("#ajax_loading_placeholder").html("Loading..."); // It will show on HTML until Ajax call is completed
+                    },
+                    success: function (data, textStatus, jqXHR) {
+                        const state_dropdown = $("#state");
+                        if (data.state) {
+                            $.each(data.state, function (index, item) {
+                                state_dropdown.append(
+                                    $("<option />").val(item.stateCode).text(item.stateName)
+                                );
+                            });
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        $("#ajax_error_placeholder").html(
+                            errorThrown + " Please Try Again"
+                        );
+                    },
+                    complete: function () {
+                        $("#ajax_loading_placeholder").html("");
+                    },
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

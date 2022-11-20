@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>Async Await</h3>
+
+    <h4>Countries - Name Contains 'India'</h4>
+    <div id="countries-ind"></div>
+    <p></p>
+
+    <h4>Countries - Language is 'Hindi'</h4>
+    <div id="countries-hin"></div>
+    <p></p>
+
+    <h4>Countries - Currency is 'INR'</h4>
+    <div id="countries-inr"></div>
+    <p></p>
+
+    <button id="load-button">Load Data</button>
+
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"
+        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous">
+    </script>
+
+    <script>
+        async function loadData(){
+            try {
+                var countries_IND =  await $.ajax('https://restcountries.com/v2/name/India');
+            $.each(countries_IND, function(index, obj){
+                $('#countries-ind').append(obj.name).append('<br/>')
+            });
+            var countries_LAN =  await $.ajax('https://restcountries.com/v2/lang/hi');
+            $.each(countries_LAN, function(index, obj){
+                $('#countries-hin').append(obj.name).append('<br/>')
+            });
+            var countries_INR =  await $.ajax('https://restcountries.com/v2/currency/inr');
+            $.each(countries_INR, function(index, obj){
+                $('#countries-inr').append(obj.name).append('<br/>')
+            });
+            } catch (error) {
+                console.log(error + " Please try again!!!")
+            }
+
+        }
+
+        loadData();
+    </script>
+
+    
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body onload="alert('Are you sure you want to leave this page')">
+    <p id="results"></p>
+    <script>
+        function displayWindowSize(){
+            let width = window.outerWidth;
+            let height = window.outerHeight;
+            let text = "Window Size: Width = " + width + " and Height = " + height;
+            document.getElementById("results").innerHTML = text;
+        }
+        window.onresize = displayWindowSize();
+    </script>
+    
+</body>
+</html>

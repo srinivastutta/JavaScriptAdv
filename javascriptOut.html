@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <! -- javascript Alert-->
+    <script>
+        window.alert("Test Alert")
+    </script>
+    <! -- Inner HTML output method-->
+    <script>
+        function cube(){
+            var number = document.getElementById("cub_123").value;
+            alert(number*number*number)
+            console.log(`${number*number*number} this will display on console in the browser`);
+        }
+    </script>
+    <form action="">
+        Enter Number: <input type="text" id="cub_123"><br/>
+        <input type="button" value="Submit" onclick="cube()">
+    </form>
+    
+</body>
+</html>

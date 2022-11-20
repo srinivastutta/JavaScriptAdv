@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>AJAX IN JAVASCRIPT</h1>
+    <p>Please Entery Country Name</p>
+    <input type="text" name="country" id="country">
+    <p>
+        <button type="button" onclick="dataLoad()">Load Data</button>
+    </p>
+    Capital is : <span id="capital"></span>
+    
+    <script>
+        function dataLoad(){
+            const country = document.getElementById('country').value;
+
+            const xhttp = new XMLHttpRequest();
+
+            xhttp.onreadystatechange = function () {
+                if(xhttp.readyState === 4 && this.status === 200) {
+                    const responseData = xhttp.responseText;
+                    const jsonData = JSON.parse(responseData);
+                    const capital = jsonData[0].capital;
+                    document.getElementById('capital').innerHTML = capital;
+                }
+            }
+            
+            xhttp.open("GET", "https://restcountries.com/v2/name/"+country+"?fullText=true", true); // Third parameter is for ajax asyncronous
+
+            xhttp.send(); //Ajax reqest triggering
+          
+
+        }
+        /*
+        0: request not initialized
+        1: server connected established
+        2: request recieved
+        3: processing request
+        4: send response
+        */
+    </script>
+</body>
+</html>

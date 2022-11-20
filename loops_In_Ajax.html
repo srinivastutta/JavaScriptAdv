@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>AJAX IN LOOP</h1>
+    <input type="text" id="country1" value="India" />
+    <span id="capital1"></span>
+    <p></p>
+    <input type="text" id="country2" value="France" />
+    <span id="capital2"></span>
+    <p></p>
+    <input type="text" id="country3" value="United States of America" />
+    <span id="capital3"></span>
+    <p></p>
+    <input type="text" id="country4" value="China" />
+    <span id="capital4"></span>
+    <p></p>
+    <input type="text" id="country5" value="Australia" />
+    <span id="capital5"></span>
+    <p></p>
+    <button id="load-button">Load</button>
+
+
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"
+    integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous">
+    // Copy jquery from https://releases.jquery.com/
+    </script>
+
+<script>
+    $(document).ready(function () {
+        var myFun = function(index){
+            var currId = "country" + index;
+                var currCapId = "capital" + index;
+                var country = $("#" + currId).val();
+
+                const url =
+                    "https://restcountries.com/v2/name/" + country + "?fullText=true";
+
+                $.ajax({
+                    url: url,
+                    beforeSend: function () {
+                        // It will call before ajax calling
+                        $("#"+currCapId).html(" "); // This will remove if there is any value loaded before
+                    },
+                    success: function (response) {
+                        if (response.length > 0) {
+                            const capital = response[0].capital;
+                            $("#" + currCapId).html(capital);
+                        }
+                    }
+                });
+        }
+
+        $("#load-button").click(function () {
+            let index;
+
+            for (index = 1; index <= 5; index++) {
+                myFun(index);
+            }
+        });
+    });
+
+</script>
+</body>
+</html>
